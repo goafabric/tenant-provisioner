@@ -28,21 +28,23 @@ public class TenantLogic {
     @PostConstruct
     public void init() {
         Arrays.asList(tenants.split(",")).forEach(tenant -> log.info("#tenant: {}", tenant));
-        Arrays.asList(applicationImages.split(",")).forEach(application -> log.info("#application: {}", application));
-        execute();
+        Arrays.asList(applicationImages.split(",")).forEach(
+                imageName -> execute(imageName, "42", true));
     }
 
-    private void execute() {
+    private void execute(String imageName, String tenantId, boolean async) {
+        log.info("executing ... {}", imageName);
         try {
-            Runtime.getRuntime().exec("kubectl delete pods person-service").waitFor();
+            String podName =  imageName.split(":")[0].split("/")[1];
+            Runtime.getRuntime().exec("kubectl delete pods " + podName).waitFor();
 
-            ProcessBuilder pb = new ProcessBuilder(
-                    "kubectl", "run", "person-service",
-                    "--image=goafabric/person-service-native:3.5.0",
+            var pb = new ProcessBuilder(
+                    "kubectl", "run", podName,
+                    "--image=" + imageName,
                     "--restart=Never",
                     "--env", "database.provisioning.goals=-migrate -terminate",
-                    "--env", "multi-tenancy.tenants=42"
-                    //,"--rm", "-it"
+                    "--env", "multi-tenancy.tenants=" + tenantId
+                    , async ? "" : "-it"
             );
 
             pb.redirectErrorStream(true); // merge stdout + stderr
