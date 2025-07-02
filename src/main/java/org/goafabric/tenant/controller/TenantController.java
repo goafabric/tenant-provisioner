@@ -25,7 +25,7 @@ public class TenantController {
         tenantLogic.deleteTenant(tenant);
     }
 
-    @PostMapping("/{tenant}")
+    @GetMapping("/addTenant/{tenant}")
     public void addTenant(@PathVariable("tenant") String tenant) {
         tenantLogic.addTenant(tenant);
     }

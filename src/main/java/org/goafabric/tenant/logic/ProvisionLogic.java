@@ -5,7 +5,6 @@ import io.fabric8.kubernetes.api.model.Pod;
 import io.fabric8.kubernetes.api.model.PodBuilder;
 import io.fabric8.kubernetes.client.DefaultKubernetesClient;
 import io.fabric8.kubernetes.client.KubernetesClient;
-import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +25,18 @@ public class ProvisionLogic {
     @Autowired
     private ApplicationContext context;
 
-    @PostConstruct
+    //@PostConstruct
     public void init() {
         Arrays.asList(applicationImages.split(",")).forEach(
                 imageName -> execute("example", imageName, "42", false));
     }
 
-    private void execute(String nameSpace, String imageName, String tenantId, boolean async) {
+    public void executeYo(String tenantId) {
+        Arrays.asList(applicationImages.split(",")).forEach(
+                imageName -> execute("example", imageName, tenantId, false));
+    }
+
+    public void execute(String nameSpace, String imageName, String tenantId, boolean async) {
         log.info("executing ... {}", imageName);
 
         String podName = imageName.split(":")[0].split("/")[1];
