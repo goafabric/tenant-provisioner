@@ -34,5 +34,5 @@ logging.level.org.flywaydb.core: "INFO"
 logging.level.org.hibernate.SQL: "INFO"
 
 #
-multi-tenancy.tenants: "0,5"
-application.images: "goafabric/person-service-native:3.5.0,goafabric/core-service:3.5.0,goafabric/catalog-batch-service:3.5.0"
+#application.images: "goafabric/person-service-native:3.5.0,goafabric/core-service:3.5.0,goafabric/catalog-batch-service:3.5.0"
+application.images: "goafabric/core-service:3.5.0,goafabric/catalog-batch-service:3.5.0"

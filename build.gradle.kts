@@ -41,7 +41,7 @@ dependencies {
 
 dependencies {
 	//web
-	implementation("org.springframework.boot:spring-boot-starter")
+	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("io.fabric8:kubernetes-client:7.3.1")
 
 	//monitoring
